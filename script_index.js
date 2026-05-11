@@ -26,11 +26,50 @@ function verificarPalpite() {
 //Verifica se o palpite é correto, muito baixo ou muito alto
     if (palpite === numeroAleatorio) {
         mensagem.textContent = 'Parabéns! Você acertou o número!';
-    } else if (tentativas === 0) {
+        mensagem.textContent = '🎉 Parabéns! Você acertou o número!';
+
+    // Solta confetes
+    confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 }
+    });
+
+    // Chuva de confetes por alguns segundos
+    const duracao = 3000;
+    const fim = Date.now() + duracao;
+
+    const intervalo = setInterval(() => {
+        if (Date.now() > fim) {
+            clearInterval(intervalo);
+            return;
+        }
+
+        confetti({
+            particleCount: 20,
+            angle: 60,
+            spread: 55,
+            origin: { x: 0 }
+        });
+
+        confetti({
+            particleCount: 20,
+            angle: 120,
+            spread: 55,
+            origin: { x: 1 }
+        });
+
+    }, 250);
+
+    return;
+    } 
+    else if (tentativas === 0) {
         mensagem.textContent = `Suas tentativas acabaram! O número era ${numeroAleatorio}`;
-    } else if (palpite < numeroAleatorio) {
+    } 
+    else if (palpite < numeroAleatorio) {
         mensagem.textContent = 'Tente um número maior!';
-    } else {
+    } 
+    else {
         mensagem.textContent = 'Tente um número menor!';
     }
 }
